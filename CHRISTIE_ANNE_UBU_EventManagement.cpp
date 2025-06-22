@@ -8,7 +8,7 @@ using namespace std;
 // Function Prototypes
 void registerAttendees(string names[], string phoneNumbers[], int totalAttendees);
 string chooseSession();
-string assignEmcee();
+string assignEmcee(string names[], int totalAttendees);
 double processTotalPayment(int totalAttendees);
 void generateAttendeeList(string names[], string phoneNumbers[], int totalAttendees, string eventSession, string eventSpeaker);
 
@@ -42,7 +42,7 @@ int main() {
 
         registerAttendees(names, phoneNumbers, totalAttendees);
         string eventSession = chooseSession();
-        string eventSpeaker = assignEmcee();
+        string eventSpeaker = assignEmcee(names, totalAttendees);
         double totalPayment = processTotalPayment(totalAttendees);
         generateAttendeeList(names, phoneNumbers, totalAttendees, eventSession, eventSpeaker);
         
@@ -113,14 +113,49 @@ string chooseSession() {
 } 
 
 //Function to assign event speaker
-string assignEmcee() {
-    string eventSpeaker;
-    cin.ignore();
-    cout << "\nEnter the name of the Event Speaker: ";
-    getline(cin,eventSpeaker);
-    
-    return eventSpeaker;
+string assignEmcee(string names[], int totalAttendees) {
+    int choice;
+    string emceeName;
+
+    do {
+        cout << "\nHow would you like to assign the Emcee?\n";
+        cout << "1. Choose from registered attendees\n";
+        cout << "2. Enter name manually (external Emcee)\n";
+        cout << "Enter your choice (1 or 2): ";
+        cin >> choice;
+
+        if (choice != 1 && choice != 2) {
+            cout << "Invalid choice. Please enter 1 or 2.\n";
+        }
+    } while (choice != 1 && choice != 2);
+
+    cin.ignore(); // Clear input buffer
+
+    if (choice == 1) {
+        cout << "\nChoose the Emcee from the list below:\n";
+        for (int i = 0; i < totalAttendees; i++) {
+            cout << i + 1 << ". " << names[i] << "\n";
+        }
+
+        int emceeIndex;
+        do {
+            cout << "Enter the number corresponding to the Emcee: ";
+            cin >> emceeIndex;
+
+            if (emceeIndex < 1 || emceeIndex > totalAttendees) {
+                cout << "Invalid selection. Please choose a valid number.\n";
+            }
+        } while (emceeIndex < 1 || emceeIndex > totalAttendees);
+
+        emceeName = names[emceeIndex - 1];
+    } else {
+        cout << "Enter the name of the external Emcee: ";
+        getline(cin, emceeName);
+    }
+
+    return emceeName;
 }
+
 
 //Function to process total payment
 double processTotalPayment(int totalAttendees) {
