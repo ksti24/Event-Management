@@ -14,7 +14,7 @@ void generateAttendeeList(string names[], string phoneNumbers[], int totalAttend
 
 int main() {
     cout << setfill('*') << setw(70) << "*" << endl;
-    cout << "\t~~ WELCOME TO OUR EVENT HORIZON ~~" << endl;
+    cout << "\t~~ WELCOME TO EVENT HORIZON ~~" << endl;
     cout << setfill('*') << setw(70) << "*" << endl;
     
     char choice; 
